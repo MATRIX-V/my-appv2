@@ -23,6 +23,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 public class IngresarClavePreexistenteView extends Composite<VerticalLayout> {
 
     public IngresarClavePreexistenteView() {
+
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();

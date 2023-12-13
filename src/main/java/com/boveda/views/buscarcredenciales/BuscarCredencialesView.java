@@ -1,5 +1,7 @@
 package com.boveda.views.buscarcredenciales;
 
+
+import com.boveda.Boveda;
 import com.boveda.views.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -7,12 +9,12 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -24,14 +26,15 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 public class BuscarCredencialesView extends Composite<VerticalLayout> {
 
     public BuscarCredencialesView() {
+        Boveda boveda = Boveda.obtenerInstancia();
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();
-        TextField textField = new TextField();
-        EmailField emailField = new EmailField();
-        TextField textField2 = new TextField();
+        TextField ContenedorPlat = new TextField();
         HorizontalLayout layoutRow = new HorizontalLayout();
-        Button buttonPrimary = new Button();
+        Button BotonBuscar = new Button();
+        Paragraph ContenedorUsuario = new Paragraph();
+        Paragraph ContenedorClave = new Paragraph();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
@@ -42,22 +45,34 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         h3.setText("Busca tus credenciales");
         h3.setWidth("100%");
         formLayout2Col.setWidth("100%");
-        textField.setLabel("Ingrese la plataforma de las credenciales a buscar");
-        emailField.setLabel("Usuario");
-        textField2.setLabel("Contraseña");
+        ContenedorPlat.setLabel("Ingrese la plataforma de las credenciales a buscar");
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
+        BotonBuscar.setText("Buscar");
+        BotonBuscar.setWidth("min-content");
+        BotonBuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonBuscar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            String plat= ContenedorPlat.getValue();
+            String clave= boveda.mostrarClave(plat);
+           String usuario= boveda.mostrarUsuario(plat);
+            ContenedorUsuario.setText("Usuario:"+usuario);
+
+            ContenedorClave.setText("Contraseña:"+clave);
+
+        });
         layoutRow.getStyle().set("flex-grow", "1");
-        buttonPrimary.setText("Buscar");
-        buttonPrimary.setWidth("min-content");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        ContenedorUsuario.setWidth("100%");
+        ContenedorUsuario.getStyle().set("font-size", "var(--lumo-font-size-xl)");
+        ContenedorClave.setWidth("100%");
+        ContenedorClave.getStyle().set("font-size", "var(--lumo-font-size-xl)");
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
         layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(textField);
-        formLayout2Col.add(emailField);
-        formLayout2Col.add(textField2);
+        formLayout2Col.add(ContenedorPlat);
         layoutColumn2.add(layoutRow);
-        layoutRow.add(buttonPrimary);
+        layoutRow.add(BotonBuscar);
+        layoutColumn2.add(ContenedorUsuario);
+        layoutColumn2.add(ContenedorClave);
     }
 }

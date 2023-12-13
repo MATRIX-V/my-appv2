@@ -1,5 +1,8 @@
+
 package com.boveda.views.crearclave;
 
+import com.boveda.Boveda;
+import com.boveda.Generar;
 import com.boveda.views.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -8,6 +11,7 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
@@ -25,15 +29,17 @@ public class CrearClaveView extends Composite<VerticalLayout> {
 
     public CrearClaveView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
-        H3 h3 = new H3();
+        Boveda boveda = Boveda.obtenerInstancia();
         H4 h4 = new H4();
+        H4 h42 = new H4();
         FormLayout formLayout2Col = new FormLayout();
-        TextField textField = new TextField();
-        TextField textField2 = new TextField();
-        Button buttonPrimary = new Button();
-        TextField textField3 = new TextField();
+        TextField ContenedorClaveNueva = new TextField();
+        TextField ContenedorUsuario = new TextField();
+        Paragraph ClaveCreada = new Paragraph();
+        TextField ContenedorPlat = new TextField();
+        Button BotonCrear = new Button();
         HorizontalLayout layoutRow = new HorizontalLayout();
-        Button buttonSecondary = new Button();
+        Button BotonGuardar = new Button();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
@@ -41,33 +47,64 @@ public class CrearClaveView extends Composite<VerticalLayout> {
         layoutColumn2.setWidth("100%");
         layoutColumn2.setMaxWidth("800px");
         layoutColumn2.setHeight("min-content");
-        h3.setText("¡Bienvenido a tu bóveda de contraseñas!");
-        h3.setWidth("100%");
         h4.setText("Crea una nueva contraseña y guárdala");
         h4.setWidth("max-content");
+        h42.setText("Si deseas guardar esta contraseña en tu bóveda ingresa los siguientes datos");
+        h42.setWidth("max-content");
         formLayout2Col.setWidth("100%");
-        textField.setLabel("Nueva contraseña");
-        textField2.setLabel("Usuario");
-        buttonPrimary.setText("Crear");
-        buttonPrimary.setWidth("min-content");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        textField3.setLabel("Plataforma");
+        ContenedorClaveNueva.setLabel("Ingrese la longitud de su contraseña");
+        ContenedorUsuario.setLabel("Usuario");
+        final String[] clave = new String[1];
+        BotonCrear.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            String longitud = ContenedorClaveNueva.getValue();
+            Generar clave1 = new Generar();
+            /*clave1.Longitud(Integer.parseInt(longitud));*/
+            clave[0] = clave1.ingresar(Integer.parseInt(longitud));
+            ClaveCreada.setText(clave[0]);
+
+        });
+
+
+        ClaveCreada.setWidth("100%");
+        ClaveCreada.getStyle().set("font-size", "var(--lumo-font-size-xl)");
+        ContenedorPlat.setLabel("Plataforma");
+        BotonCrear.setText("Crear");
+        BotonCrear.setWidth("min-content");
+        BotonCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Paragraph textSmall = new Paragraph();
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("768px");
         layoutRow.getStyle().set("flex-grow", "1");
         layoutRow.setAlignItems(Alignment.END);
         layoutRow.setJustifyContentMode(JustifyContentMode.END);
-        buttonSecondary.setText("Guardar");
-        buttonSecondary.setWidth("min-content");
+        BotonGuardar.setText("Guardar");
+        BotonGuardar.setWidth("min-content");
+        BotonGuardar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            String usuario = ContenedorUsuario.getValue();
+            String plat= ContenedorPlat.getValue();
+            boveda.guardarClave(plat, clave[0]);
+            boveda.guardarUsuario(plat, usuario);
+            textSmall.setText("Guardado con éxito");
+        });
+
+        textSmall.setWidth("100%");
+        textSmall.getStyle().set("font-size", "var(--lumo-font-size-xs)");
         getContent().add(layoutColumn2);
-        layoutColumn2.add(h3);
         layoutColumn2.add(h4);
         layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(textField);
-        formLayout2Col.add(textField2);
-        formLayout2Col.add(buttonPrimary);
-        formLayout2Col.add(textField3);
+        formLayout2Col.add(ContenedorClaveNueva);
+        formLayout2Col.add(ClaveCreada);
+        formLayout2Col.add(BotonCrear);
         layoutColumn2.add(layoutRow);
-        layoutRow.add(buttonSecondary);
+        layoutColumn2.add(h42);
+        layoutColumn2.add(ContenedorUsuario);
+        layoutColumn2.add(ContenedorPlat);
+        layoutColumn2.add(BotonGuardar);
+        layoutColumn2.add(textSmall);
+
+
+
     }
 }
