@@ -1,9 +1,11 @@
 package com.boveda.views.inicio;
 
+import com.boveda.ClaveExistente;
 import com.boveda.Credenciales;
 import com.boveda.Utils;
 import com.boveda.views.MainLayout;
 import com.boveda.views.crearclave.CrearClaveView;
+import com.boveda.views.ingresarclavepreexistente.IngresarClavePreexistenteView;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -69,6 +71,11 @@ public class InicioView extends Composite<VerticalLayout> {
         BotonCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonGuardar.setText("Guardar clave");
         BotonGuardar.setWidth("min-content");
+        BotonGuardar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(IngresarClavePreexistenteView.class);
+
+        });
         getContent().add(h1);
         getContent().add(h4);
         layoutColumn2.add(grid);  // Mover el Grid dentro de layoutColumn2
