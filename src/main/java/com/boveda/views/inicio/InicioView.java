@@ -1,6 +1,6 @@
 package com.boveda.views.inicio;
 
-import com.boveda.ClaveExistente;
+
 import com.boveda.Credenciales;
 import com.boveda.Utils;
 import com.boveda.views.MainLayout;
@@ -19,7 +19,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
+
+import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import java.util.List;
@@ -54,6 +55,38 @@ public class InicioView extends Composite<VerticalLayout> {
         List<Credenciales> credenciales = Utils.Cred;
         grid.setItems(credenciales);
 
+        layoutColumn2.setWidthFull();
+        layoutColumn2.getStyle().set("flex-grow", "1");
+        layoutRow.setWidthFull();
+        getContent().setFlexGrow(1.0, layoutRow);
+        layoutRow.addClassName(LumoUtility.Gap.MEDIUM);
+        layoutRow.setWidth("100%");
+        layoutRow.getStyle().set("flex-grow", "1");
+        BotonCrear.setText("Crear clave");
+        BotonCrear.setWidth("min-content");
+        BotonCrear.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(CrearClaveView.class);
+
+        });
+        BotonCrear.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonGuardar.setText("Guardar clave");
+        BotonGuardar.setWidth("min-content");
+        BotonGuardar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(IngresarClavePreexistenteView.class);
+
+        });
+        getContent().add(h1);
+
+        // Configurar las columnas del Grid
+        grid.addColumn(Credenciales::getPlataforma).setHeader("Plataforma");
+        grid.addColumn(Credenciales::getUsuario).setHeader("Usuario");
+        grid.addColumn(Credenciales::getClave).setHeader("Clave cifrada");
+
+        // Configurar datos de muestra en el Grid
+        List<Credenciales> credenciales = Utils.Cred;
+        grid.setItems(credenciales);
         layoutColumn2.setWidthFull();
         layoutColumn2.getStyle().set("flex-grow", "1");
         layoutRow.setWidthFull();

@@ -55,7 +55,9 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
 
         nav.addItem(new SideNavItem("Inicio", InicioView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
+
        /* nav.addItem(new SideNavItem("Crear Clave", CrearClaveView.class, LineAwesomeIcon.USER.create()));
+
         nav.addItem(new SideNavItem("Ingresar Clave Preexistente", IngresarClavePreexistenteView.class,
                 LineAwesomeIcon.USER.create()));*/
         nav.addItem(
