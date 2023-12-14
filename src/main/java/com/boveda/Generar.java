@@ -1,13 +1,9 @@
 package com.boveda;
 
 import com.boveda.Claves;
-import com.vaadin.flow.component.html.Paragraph;
 
 import java.security.SecureRandom;
 import java.util.Random;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 public class Generar extends Claves {
 

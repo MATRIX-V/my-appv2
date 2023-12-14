@@ -1,17 +1,7 @@
 package com.boveda;
 
-import com.vaadin.flow.component.html.Paragraph;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.nio.charset.StandardCharsets;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import javax.swing.*;
-import java.security.Key;
-import java.util.Base64;
 import java.util.Scanner;
 
 public class Boveda {
@@ -22,7 +12,7 @@ public class Boveda {
     private Boveda() {
         // Inicialización de la instancia, si es necesario
     }
-//Patron de diseño Singletonpara tener una única instancia
+//Patron de diseño Singleton para tener una única instancia
     public static synchronized Boveda obtenerInstancia() {
         if (instancia == null) {
             instancia = new Boveda();
@@ -30,9 +20,11 @@ public class Boveda {
         return instancia;
     }
 
-    public void guardarClave (String plat, String clave){
+    public String guardarClave (String plat, String clave){
+        String claveE = encriptar1.encriptarAES(clave);
 
-        mapClaves.put(plat, encriptar1.encriptarAES(clave));
+        mapClaves.put(plat, claveE);
+        return claveE;
     }
 
 
@@ -65,6 +57,20 @@ public class Boveda {
         System.out.println("La clave nueva es:"+mapUsuarios.get(plat));
     }
 
+    public Map<String, String> getMapClaves() {
+        return mapClaves;
+    }
 
+    public void setMapClaves(Map<String, String> mapClaves) {
+        this.mapClaves = mapClaves;
+    }
+
+    public Map<String, String> getMapUsuarios() {
+        return mapUsuarios;
+    }
+
+    public void setMapUsuarios(Map<String, String> mapUsuarios) {
+        this.mapUsuarios = mapUsuarios;
+    }
 }
 
