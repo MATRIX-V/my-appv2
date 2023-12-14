@@ -2,7 +2,9 @@
 package com.boveda.views.crearclave;
 
 import com.boveda.Boveda;
+import com.boveda.Credenciales;
 import com.boveda.Generar;
+import com.boveda.Utils;
 import com.boveda.views.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -54,7 +56,7 @@ public class CrearClaveView extends Composite<VerticalLayout> {
         formLayout2Col.setWidth("100%");
         ContenedorClaveNueva.setLabel("Ingrese la longitud de su contraseña");
         ContenedorUsuario.setLabel("Usuario");
-        final String[] clave = new String[1];
+        final String[] clave = {new String()};
         BotonCrear.addClickListener(event -> {
             // La lógica que se desea ejecutar cuando se presiona el botón
             String longitud = ContenedorClaveNueva.getValue();
@@ -84,8 +86,10 @@ public class CrearClaveView extends Composite<VerticalLayout> {
             // La lógica que se desea ejecutar cuando se presiona el botón
             String usuario = ContenedorUsuario.getValue();
             String plat= ContenedorPlat.getValue();
-            boveda.guardarClave(plat, clave[0]);
+            String claveE=boveda.guardarClave(plat, clave[0]);
             boveda.guardarUsuario(plat, usuario);
+            Credenciales credenciales1 =new Credenciales(plat, usuario, claveE);
+            Utils.Cred.add(credenciales1);
             textSmall.setText("Guardado con éxito");
         });
 
@@ -108,3 +112,4 @@ public class CrearClaveView extends Composite<VerticalLayout> {
 
     }
 }
+

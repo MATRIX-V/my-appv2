@@ -30,9 +30,11 @@ public class Boveda {
         return instancia;
     }
 
-    public void guardarClave (String plat, String clave){
+    public String guardarClave (String plat, String clave){
+        String claveE = encriptar1.encriptarAES(clave);
 
-        mapClaves.put(plat, encriptar1.encriptarAES(clave));
+        mapClaves.put(plat, claveE);
+        return claveE;
     }
 
 
