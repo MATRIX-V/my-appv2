@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 
 public class Generar extends Claves {
 
-    //declaramos con final para evitar modificación del contenido en cualquier parte del código:
     /* serán llamados en conjunto como libelementos a la hora de la generacion de claves*/
     private String minusculas = "abcdefghijklmnñopqrstuvwxyz";
     private String mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -50,7 +49,7 @@ public class Generar extends Claves {
 
         if (a == false) {
 
-            return "Su contraseña no será segura, debe tener minimo 8 caracteres";
+            return "Su contraseña no será segura, debe tener mínimo 8 caracteres y máximo 100 caracteres";
         }
         else {
             String pswgen = pswgen(longitud);

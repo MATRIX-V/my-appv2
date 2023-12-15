@@ -11,7 +11,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
@@ -61,7 +60,6 @@ public class CrearClaveView extends Composite<VerticalLayout> {
             // La lógica que se desea ejecutar cuando se presiona el botón
             String longitud = ContenedorClaveNueva.getValue();
             Generar clave1 = new Generar();
-            /*clave1.Longitud(Integer.parseInt(longitud));*/
             clave[0] = clave1.ingresar(Integer.parseInt(longitud));
             ClaveCreada.setText(clave[0]);
 
@@ -86,11 +84,15 @@ public class CrearClaveView extends Composite<VerticalLayout> {
             // La lógica que se desea ejecutar cuando se presiona el botón
             String usuario = ContenedorUsuario.getValue();
             String plat= ContenedorPlat.getValue();
-            String claveE=boveda.guardarClave(plat, clave[0]);
-            boveda.guardarUsuario(plat, usuario);
-            Credenciales credenciales1 =new Credenciales(plat, usuario, claveE);
-            Utils.Cred.add(credenciales1);
-            textSmall.setText("Guardado con éxito");
+            if(boveda.existePlataforma(plat)){
+                textSmall.setText("Ya existe una entrada para esa plataforma");
+            }else {
+                String claveE = boveda.guardarClave(plat, clave[0]);
+                boveda.guardarUsuario(plat, usuario);
+                Credenciales credenciales1 = new Credenciales(plat, usuario, claveE);
+                Utils.Cred.add( credenciales1);
+                textSmall.setText("Guardado con éxito");
+            }
         });
 
         textSmall.setWidth("100%");
@@ -112,4 +114,5 @@ public class CrearClaveView extends Composite<VerticalLayout> {
 
     }
 }
+
 

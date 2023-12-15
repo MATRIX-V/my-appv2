@@ -1,6 +1,4 @@
 package com.boveda.views.buscarcredenciales;
-
-
 import com.boveda.Boveda;
 import com.boveda.views.MainLayout;
 import com.vaadin.flow.component.Composite;
@@ -11,6 +9,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -35,6 +34,7 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         Button BotonBuscar = new Button();
         Paragraph ContenedorUsuario = new Paragraph();
         Paragraph ContenedorClave = new Paragraph();
+
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
@@ -53,13 +53,18 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         BotonBuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonBuscar.addClickListener(event -> {
             // La lógica que se desea ejecutar cuando se presiona el botón
+
             String plat= ContenedorPlat.getValue();
-            String clave= boveda.mostrarClave(plat);
-           String usuario= boveda.mostrarUsuario(plat);
-            ContenedorUsuario.setText("Usuario:"+usuario);
+            if(boveda.existePlataforma(plat)){
+                String clave = boveda.mostrarClave(plat);
+                String usuario = boveda.mostrarUsuario(plat);
+                ContenedorUsuario.setText("Usuario:" + usuario);
 
-            ContenedorClave.setText("Contraseña:"+clave);
+                ContenedorClave.setText("Contraseña:" + clave);
+            }else {
 
+                Notification.show("Credenciales no existen");
+            }
         });
         layoutRow.getStyle().set("flex-grow", "1");
         ContenedorUsuario.setWidth("100%");
@@ -74,5 +79,6 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         layoutRow.add(BotonBuscar);
         layoutColumn2.add(ContenedorUsuario);
         layoutColumn2.add(ContenedorClave);
+
     }
 }

@@ -1,9 +1,6 @@
 package com.boveda.views;
 
-import com.boveda.views.buscarcredenciales.BuscarCredencialesView;
-import com.boveda.views.crearclave.CrearClaveView;
-import com.boveda.views.editarcredenciales.EditarCredencialesView;
-import com.boveda.views.ingresarclavepreexistente.IngresarClavePreexistenteView;
+
 import com.boveda.views.inicio.InicioView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -18,9 +15,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
+
 public class MainLayout extends AppLayout {
 
     private H2 viewTitle;
@@ -55,13 +50,7 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
 
         nav.addItem(new SideNavItem("Inicio", InicioView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
-        /*nav.addItem(new SideNavItem("Crear Clave", CrearClaveView.class, LineAwesomeIcon.USER.create()));
-        nav.addItem(new SideNavItem("Ingresar Clave Preexistente", IngresarClavePreexistenteView.class,
-                LineAwesomeIcon.USER.create()));*/
-        nav.addItem(
-                new SideNavItem("Buscar Credenciales", BuscarCredencialesView.class, LineAwesomeIcon.USER.create()));
-        nav.addItem(
-                new SideNavItem("Editar Credenciales", EditarCredencialesView.class, LineAwesomeIcon.USER.create()));
+
 
         return nav;
     }
