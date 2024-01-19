@@ -1,6 +1,6 @@
 package com.boveda;
 
-import com.boveda.Credenciales;
+import com.boveda.models.Credenciales;
 
 import java.util.ArrayList;
 import java.util.List;

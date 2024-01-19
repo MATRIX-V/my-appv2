@@ -2,7 +2,7 @@
 package com.boveda.views.crearclave;
 
 import com.boveda.Boveda;
-import com.boveda.Credenciales;
+import com.boveda.models.Credenciales;
 import com.boveda.Generar;
 import com.boveda.Utils;
 import com.boveda.views.MainLayout;

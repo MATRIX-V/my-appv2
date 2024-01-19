@@ -1,7 +1,7 @@
 package com.boveda.views.inicio;
 
 import com.boveda.Boveda;
-import com.boveda.Credenciales;
+import com.boveda.models.Credenciales;
 import com.boveda.Utils;
 import com.boveda.views.MainLayout;
 import com.boveda.views.buscarcredenciales.BuscarCredencialesView;
