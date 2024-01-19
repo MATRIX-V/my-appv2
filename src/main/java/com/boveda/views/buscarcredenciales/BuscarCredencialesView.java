@@ -23,7 +23,6 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 @Route(value = "Buscar-Credenciales", layout = MainLayout.class)
 @Uses(Icon.class)
 public class BuscarCredencialesView extends Composite<VerticalLayout> {
-
     public BuscarCredencialesView() {
         Boveda boveda = Boveda.obtenerInstancia();
         VerticalLayout layoutColumn2 = new VerticalLayout();
