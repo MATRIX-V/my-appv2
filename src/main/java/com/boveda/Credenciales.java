@@ -1,5 +1,10 @@
 package com.boveda;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.lang.annotation.Documented;
+@Document (collection = "credenciales")
+
 public class Credenciales {
     private String plataforma;
 
