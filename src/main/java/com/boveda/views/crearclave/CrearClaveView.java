@@ -5,6 +5,7 @@ import com.boveda.Boveda;
 import com.boveda.models.Credenciales;
 import com.boveda.Generar;
 import com.boveda.Utils;
+import com.boveda.services.CredencialesService;
 import com.boveda.views.MainLayout;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -26,9 +27,11 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 @PageTitle("Crear Clave")
 @Route(value = "Crear-Clave", layout = MainLayout.class)
 @Uses(Icon.class)
-public class CrearClaveView extends Composite<VerticalLayout> {
+public class CrearClaveView extends Composite<VerticalLayout>{
 
-    public CrearClaveView() {
+    private CredencialesService credencialesService;
+    public CrearClaveView(CredencialesService credencialesService) {
+        this.credencialesService=credencialesService;
         VerticalLayout layoutColumn2 = new VerticalLayout();
         Boveda boveda = Boveda.obtenerInstancia();
         H4 h4 = new H4();
@@ -90,7 +93,8 @@ public class CrearClaveView extends Composite<VerticalLayout> {
                 String claveE = boveda.guardarClave(plat, clave[0]);
                 boveda.guardarUsuario(plat, usuario);
                 Credenciales credenciales1 = new Credenciales(plat, usuario, claveE);
-                Utils.Cred.add( credenciales1);
+                //Utils.Cred.add( credenciales1);
+                credencialesService.agregarCredenciales(credenciales1);
                 textSmall.setText("Guardado con éxito");
             }
         });
