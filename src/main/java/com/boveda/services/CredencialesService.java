@@ -24,6 +24,17 @@ public class CredencialesService {
         }
     }
 
+    public List<Credenciales> BuscarCredencialesPorUsuario(String idUsuario){
+        List<Credenciales> listaCredenciales= new ArrayList<>();
+        try{
+          listaCredenciales=credencialesRepository.findByIdUsuario(idUsuario);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            System.out.println("No se pudo guardar el contacto");
+        }
+        return listaCredenciales;
+    }
+
 
 
 
