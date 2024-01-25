@@ -7,7 +7,9 @@ import com.boveda.Generar;
 import com.boveda.Utils;
 import com.boveda.services.CredencialesService;
 import com.boveda.views.MainLayout;
+import com.boveda.views.inicio.InicioView;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
@@ -44,6 +46,7 @@ public class CrearClaveView extends Composite<VerticalLayout>{
         Button BotonCrear = new Button();
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button BotonGuardar = new Button();
+        Button BotonRegresar = new Button();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(JustifyContentMode.START);
@@ -67,8 +70,6 @@ public class CrearClaveView extends Composite<VerticalLayout>{
             ClaveCreada.setText(clave[0]);
 
         });
-
-
         ClaveCreada.setWidth("100%");
         ClaveCreada.getStyle().set("font-size", "var(--lumo-font-size-xl)");
         ContenedorPlat.setLabel("Plataforma");
@@ -98,6 +99,13 @@ public class CrearClaveView extends Composite<VerticalLayout>{
                 textSmall.setText("Guardado con éxito");
             }
         });
+        BotonRegresar.setText("Regresar a inicio");
+        BotonRegresar.setWidth("min-content");
+        BotonRegresar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonRegresar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(InicioView.class);
+        });
 
         textSmall.setWidth("100%");
         textSmall.getStyle().set("font-size", "var(--lumo-font-size-xs)");
@@ -112,6 +120,7 @@ public class CrearClaveView extends Composite<VerticalLayout>{
         layoutColumn2.add(ContenedorUsuario);
         layoutColumn2.add(ContenedorPlat);
         layoutColumn2.add(BotonGuardar);
+        layoutColumn2.add(BotonRegresar);
         layoutColumn2.add(textSmall);
 
 

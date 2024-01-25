@@ -22,7 +22,7 @@ public class MainLayout extends AppLayout {
 
     public MainLayout() {
         setPrimarySection(Section.DRAWER);
-        addDrawerContent();
+        //addDrawerContent();
         addHeaderContent();
     }
 
@@ -49,7 +49,7 @@ public class MainLayout extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Inicio", InicioView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
+       // nav.addItem(new SideNavItem("Inicio", InicioView.class, LineAwesomeIcon.PENCIL_RULER_SOLID.create()));
 
 
         return nav;

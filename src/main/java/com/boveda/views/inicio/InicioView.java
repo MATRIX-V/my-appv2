@@ -30,7 +30,7 @@ import java.util.List;
 
 @PageTitle("Inicio")
 @Route(value = "inicio", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
+@RouteAlias(value = "inicio", layout = MainLayout.class)
 @Uses(Icon.class)
 public class InicioView extends Composite<VerticalLayout> {
 

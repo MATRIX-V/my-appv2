@@ -1,7 +1,9 @@
 package com.boveda.views.buscarcredenciales;
 import com.boveda.Boveda;
 import com.boveda.views.MainLayout;
+import com.boveda.views.inicio.InicioView;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
@@ -31,6 +33,7 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         TextField ContenedorPlat = new TextField();
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button BotonBuscar = new Button();
+        Button BotonRegresar = new Button();
         Paragraph ContenedorUsuario = new Paragraph();
         Paragraph ContenedorClave = new Paragraph();
 
@@ -65,6 +68,14 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
                 Notification.show("Credenciales no existen");
             }
         });
+
+        BotonRegresar.setText("Regresar a inicio");
+        BotonRegresar.setWidth("min-content");
+        BotonRegresar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonRegresar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(InicioView.class);
+        });
         layoutRow.getStyle().set("flex-grow", "1");
         ContenedorUsuario.setWidth("100%");
         ContenedorUsuario.getStyle().set("font-size", "var(--lumo-font-size-xl)");
@@ -76,6 +87,7 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         formLayout2Col.add(ContenedorPlat);
         layoutColumn2.add(layoutRow);
         layoutRow.add(BotonBuscar);
+        layoutRow.add(BotonRegresar);
         layoutColumn2.add(ContenedorUsuario);
         layoutColumn2.add(ContenedorClave);
 

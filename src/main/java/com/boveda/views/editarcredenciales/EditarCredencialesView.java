@@ -2,7 +2,9 @@ package com.boveda.views.editarcredenciales;
 
 import com.boveda.Boveda;
 import com.boveda.views.MainLayout;
+import com.boveda.views.inicio.InicioView;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.Uses;
@@ -44,6 +46,7 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         VerticalLayout layoutColumn5 = new VerticalLayout();
         HorizontalLayout layoutRow2 = new HorizontalLayout();
         Button buttonPrimary2 = new Button();
+        Button BotonRegresar = new Button();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
         getContent().setJustifyContentMode(FlexComponent.JustifyContentMode.START);
@@ -82,6 +85,13 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         buttonPrimary2.setText("Guardar");
         buttonPrimary2.setWidth("min-content");
         buttonPrimary2.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonRegresar.setText("Regresar a inicio");
+        BotonRegresar.setWidth("min-content");
+        BotonRegresar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonRegresar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(InicioView.class);
+        });
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
         layoutColumn2.add(enlace);
@@ -98,6 +108,7 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         layoutColumn4.add(layoutColumn5);
         layoutColumn5.add(layoutRow2);
         layoutRow2.add(buttonPrimary2);
+        layoutRow2.add(BotonRegresar);
 
         // Agregar la lógica al botón de búsqueda
         buttonPrimary.addClickListener(e -> buscarCredenciales(plataformaTextField, nuevoUsuarioTextField, nuevaClaveTextField));
