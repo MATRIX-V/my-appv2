@@ -63,9 +63,14 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
             // La lógica que se desea ejecutar cuando se presiona el botón
             String plataforma= ContenedorPlat.getValue();
             credenciales=credencialesService.buscarCredenciales(plataforma, CredencialesService.id);
-            ContenedorUsuario.setText(credenciales.getUsuario());
-            String clavedesencriptada=encriptar.desencriptarAES(credenciales.getClave());
-            ContenedorClave.setText(clavedesencriptada);
+
+            if (credenciales!=null){
+                ContenedorUsuario.setText(credenciales.getUsuario());
+                String clavedesencriptada=encriptar.desencriptarAES(credenciales.getClave());
+                ContenedorClave.setText(clavedesencriptada);
+            }else {
+                Notification.show("La plataforma no existe en la bóveda");
+            }
             /*String plat= ContenedorPlat.getValue();
             if(boveda.existePlataforma(plat)){
                 String clave = boveda.mostrarClave(plat);

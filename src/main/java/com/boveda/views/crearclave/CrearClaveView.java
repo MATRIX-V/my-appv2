@@ -2,6 +2,7 @@
 package com.boveda.views.crearclave;
 
 import com.boveda.Boveda;
+import com.boveda.Encriptar;
 import com.boveda.models.Credenciales;
 import com.boveda.Generar;
 import com.boveda.Utils;
@@ -17,6 +18,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -33,6 +35,7 @@ public class CrearClaveView extends Composite<VerticalLayout>{
 
     private CredencialesService credencialesService;
     public CrearClaveView(CredencialesService credencialesService) {
+        Encriptar encriptar = new Encriptar();
         this.credencialesService=credencialesService;
         VerticalLayout layoutColumn2 = new VerticalLayout();
         Boveda boveda = Boveda.obtenerInstancia();
@@ -88,7 +91,20 @@ public class CrearClaveView extends Composite<VerticalLayout>{
             // La lógica que se desea ejecutar cuando se presiona el botón
             String usuario = ContenedorUsuario.getValue();
             String plat= ContenedorPlat.getValue();
-            if(boveda.existePlataforma(plat)){
+            String clave1=clave[0];
+            String claveCifrada =encriptar.encriptarAES(clave1);
+            Credenciales c1;
+            c1=credencialesService.buscarCredenciales(plat, CredencialesService.id);
+            if (c1==null){
+                Credenciales credenciales1 = new Credenciales(plat, usuario, claveCifrada, credencialesService.id);
+                credencialesService.listaCredenciales.add(credenciales1);
+                credencialesService.agregarCredenciales(credenciales1);
+                Notification.show("La plataforma fue guardada con éxito");
+            }else {
+
+                Notification.show("La plataforma ya existe en la bóveda");
+            }
+           /*if(boveda.existePlataforma(plat)){
                 textSmall.setText("Ya existe una entrada para esa plataforma");
             }else {
                 String claveE = boveda.guardarClave(plat, clave[0]);
@@ -98,7 +114,7 @@ public class CrearClaveView extends Composite<VerticalLayout>{
                 credencialesService.listaCredenciales.add(credenciales1);
                 credencialesService.agregarCredenciales(credenciales1);
                 textSmall.setText("Guardado con éxito");
-            }
+            }*/
         });
         BotonRegresar.setText("Regresar a inicio");
         BotonRegresar.setWidth("min-content");
