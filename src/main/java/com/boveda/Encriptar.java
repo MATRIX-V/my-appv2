@@ -22,7 +22,7 @@ public class Encriptar {
     private static final String claveSecreta = "aopmencyiosklehy";  // This should be stored securely
 
 
-    public static String encriptarAES(String original) {
+    public /*static*/ String encriptarAES(String original) {
         try {
             Key key = generateKey();
             Cipher cipher = Cipher.getInstance("AES");
@@ -34,7 +34,7 @@ public class Encriptar {
         }
     }
 
-    public static String desencriptarAES(String encrypted) {
+    public /*static*/ String desencriptarAES(String encrypted) {
         try {
             Key key = generateKey();
             Cipher cipher = Cipher.getInstance("AES");

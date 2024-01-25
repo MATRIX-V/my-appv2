@@ -2,6 +2,7 @@ package com.boveda.views.iniciosesion;
 
 
 
+import com.boveda.services.CredencialesService;
 import com.boveda.views.MainLayout;
 import com.boveda.views.crearclave.CrearClaveView;
 import com.boveda.views.inicio.InicioView;
@@ -25,13 +26,15 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 @RouteAlias(value = "", layout = MainLayout.class)
 @Uses(Icon.class)
 public class InicioSesionView extends Composite<VerticalLayout> {
+    private CredencialesService credencialesService;
 
-    public InicioSesionView() {
+    public InicioSesionView(CredencialesService credencialesService) {
+
         HorizontalLayout layoutRow = new HorizontalLayout();
         HorizontalLayout layoutRow2 = new HorizontalLayout();
         VerticalLayout layoutColumn2 = new VerticalLayout();
         TextField textField = new TextField();
-        TextField textField2 = new TextField();
+        TextField textFieldClave = new TextField();
         Button BotonIniciar = new Button();
         HorizontalLayout layoutRow3 = new HorizontalLayout();
         HorizontalLayout layoutRow4 = new HorizontalLayout();
@@ -54,9 +57,9 @@ public class InicioSesionView extends Composite<VerticalLayout> {
         textField.setLabel("Usuario");
         layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, textField);
         textField.setWidth("min-content");
-        textField2.setLabel("Contraseña");
-        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, textField2);
-        textField2.setWidth("min-content");
+        textFieldClave.setLabel("Contraseña");
+        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, textFieldClave);
+        textFieldClave.setWidth("min-content");
         BotonIniciar.setText("Entrar");
         layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, BotonIniciar);
         BotonIniciar.setWidth("min-content");
@@ -64,6 +67,7 @@ public class InicioSesionView extends Composite<VerticalLayout> {
         BotonIniciar.addClickListener(event -> {
             // La lógica que se desea ejecutar cuando se presiona el botón
             UI.getCurrent().navigate(InicioView.class);
+            CredencialesService.id=textFieldClave.getValue();
         });
         layoutRow3.setHeightFull();
         layoutRow.setFlexGrow(1.0, layoutRow3);
@@ -79,7 +83,7 @@ public class InicioSesionView extends Composite<VerticalLayout> {
         layoutRow.add(layoutRow2);
         layoutRow.add(layoutColumn2);
         layoutColumn2.add(textField);
-        layoutColumn2.add(textField2);
+        layoutColumn2.add(textFieldClave);
         layoutColumn2.add(BotonIniciar);
         layoutRow.add(layoutRow3);
         getContent().add(layoutRow4);

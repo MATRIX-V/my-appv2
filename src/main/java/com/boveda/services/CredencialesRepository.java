@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
     public interface CredencialesRepository extends MongoRepository<Credenciales, String> {
-        public Credenciales findByPlataforma (String plataforma);
+        public Credenciales findByPlataformaAndAndIdUsuario (String plataforma, String idUsuario);
         public List<Credenciales> findByIdUsuario (String idUsuario);
     }

@@ -93,8 +93,9 @@ public class CrearClaveView extends Composite<VerticalLayout>{
             }else {
                 String claveE = boveda.guardarClave(plat, clave[0]);
                 boveda.guardarUsuario(plat, usuario);
-                Credenciales credenciales1 = new Credenciales(plat, usuario, claveE);
-                Utils.Cred.add( credenciales1);
+                Credenciales credenciales1 = new Credenciales(plat, usuario, claveE, credencialesService.id);
+                //Utils.Cred.add( credenciales1);
+                credencialesService.listaCredenciales.add(credenciales1);
                 credencialesService.agregarCredenciales(credenciales1);
                 textSmall.setText("Guardado con éxito");
             }

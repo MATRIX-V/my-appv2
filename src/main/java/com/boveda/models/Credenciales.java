@@ -4,28 +4,37 @@ import jakarta.persistence.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.lang.annotation.Documented;
 @Document (collection = "credenciales")
 
 public class Credenciales {
     @Id
     private String id;
-    @Indexed (name="plataforma", unique = true)
+
     private String plataforma;
 
     private String usuario;
-
+    @Indexed (name="clave", unique = true)
     private String clave;
     private String idUsuario;
 
-    public Credenciales(String plataforma, String usuario, String clave) {
+    /*public Credenciales(String plataforma, String usuario, String clave, String id) {
         this.plataforma = plataforma;
         this.usuario = usuario;
         this.clave = clave;
+    }*/
+
+    public Credenciales(String plataforma, String usuario, String clave, String idUsuario) {
+
+        this.plataforma = plataforma;
+        this.usuario = usuario;
+        this.clave = clave;
+        this.idUsuario = idUsuario;
     }
 
     public Credenciales() {
     }
+
+
 
     public String getId() {
         return id;

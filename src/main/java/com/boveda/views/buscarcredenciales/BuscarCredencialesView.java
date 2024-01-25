@@ -1,5 +1,8 @@
 package com.boveda.views.buscarcredenciales;
 import com.boveda.Boveda;
+import com.boveda.Encriptar;
+import com.boveda.models.Credenciales;
+import com.boveda.services.CredencialesService;
 import com.boveda.views.MainLayout;
 import com.boveda.views.inicio.InicioView;
 import com.vaadin.flow.component.Composite;
@@ -25,7 +28,9 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 @Route(value = "Buscar-Credenciales", layout = MainLayout.class)
 @Uses(Icon.class)
 public class BuscarCredencialesView extends Composite<VerticalLayout> {
-    public BuscarCredencialesView() {
+    private CredencialesService credencialesService;
+    Encriptar encriptar=new Encriptar();
+    public BuscarCredencialesView(CredencialesService credencialesService) {
         Boveda boveda = Boveda.obtenerInstancia();
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
@@ -54,9 +59,14 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
         BotonBuscar.setWidth("min-content");
         BotonBuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonBuscar.addClickListener(event -> {
+            Credenciales credenciales = new Credenciales();
             // La lógica que se desea ejecutar cuando se presiona el botón
-
-            String plat= ContenedorPlat.getValue();
+            String plataforma= ContenedorPlat.getValue();
+            credenciales=credencialesService.buscarCredenciales(plataforma, CredencialesService.id);
+            ContenedorUsuario.setText(credenciales.getUsuario());
+            String clavedesencriptada=encriptar.desencriptarAES(credenciales.getClave());
+            ContenedorClave.setText(clavedesencriptada);
+            /*String plat= ContenedorPlat.getValue();
             if(boveda.existePlataforma(plat)){
                 String clave = boveda.mostrarClave(plat);
                 String usuario = boveda.mostrarUsuario(plat);
@@ -66,7 +76,7 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
             }else {
 
                 Notification.show("Credenciales no existen");
-            }
+            }*/
         });
 
         BotonRegresar.setText("Regresar a inicio");

@@ -3,6 +3,7 @@ package com.boveda.views.inicio;
 import com.boveda.Boveda;
 import com.boveda.models.Credenciales;
 import com.boveda.Utils;
+import com.boveda.services.CredencialesService;
 import com.boveda.views.MainLayout;
 import com.boveda.views.buscarcredenciales.BuscarCredencialesView;
 import com.boveda.views.crearclave.CrearClaveView;
@@ -33,12 +34,12 @@ import java.util.List;
 @RouteAlias(value = "inicio", layout = MainLayout.class)
 @Uses(Icon.class)
 public class InicioView extends Composite<VerticalLayout> {
-
-    public InicioView() {
+    private CredencialesService credencialesService;
+    public InicioView(CredencialesService credencialesService) {
         H1 h1 = new H1();
         H2 h2 = new H2();
         VerticalLayout layoutColumn2 = new VerticalLayout();
-        ListDataProvider<Credenciales> dataProvider = new ListDataProvider<>(Utils.Cred);
+        ListDataProvider<Credenciales> dataProvider = new ListDataProvider<>(CredencialesService.listaCredenciales/*Utils.Cred*/);
         Grid<Credenciales> grid = new Grid<>(Credenciales.class, false);
         HorizontalLayout layoutRow = new HorizontalLayout();
         Button BotonCrear = new Button();
@@ -62,7 +63,7 @@ public class InicioView extends Composite<VerticalLayout> {
         grid.setDataProvider(dataProvider);
 
         // Configurar datos de muestra en el Grid
-        List<Credenciales> credenciales = Utils.Cred;
+        List<Credenciales> credenciales = CredencialesService.listaCredenciales;//Utils.Cred;
         grid.setItems(credenciales);
         layoutColumn2.setWidthFull();
         layoutColumn2.getStyle().set("flex-grow", "1");
@@ -104,8 +105,11 @@ public class InicioView extends Composite<VerticalLayout> {
                 Boveda.eliminarDato(credencial.getPlataforma());
 
                 // Remover la credencial del Grid
-                Utils.Cred.remove(credencial);
-                grid.setItems(Utils.Cred);
+                CredencialesService.listaCredenciales.remove(credencial);
+                //Utils.Cred.remove(credencial);
+                grid.setItems(CredencialesService.listaCredenciales);
+                //grid.setItems(Utils.Cred);
+                credencialesService.borrarCredenciales(credencial);
             });
             return deleteButton;
         });

@@ -1,6 +1,9 @@
 package com.boveda.views.editarcredenciales;
 
 import com.boveda.Boveda;
+
+import com.boveda.Encriptar;
+import com.boveda.services.CredencialesService;
 import com.boveda.views.MainLayout;
 import com.boveda.views.inicio.InicioView;
 import com.vaadin.flow.component.Composite;
@@ -20,23 +23,26 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
+import com.boveda.models.Credenciales;
 
 @PageTitle("Editar Credenciales")
 @Route(value = "Editar-Credenciales", layout = MainLayout.class)
 @Uses(Icon.class)
 public class EditarCredencialesView extends Composite<VerticalLayout> {
+    private CredencialesService credencialesService;
+    Encriptar encriptar = new Encriptar();
+    //private final Boveda boveda;
 
-    private final Boveda boveda;
+    public EditarCredencialesView(CredencialesService credencialesService) {
+        //this.boveda = Boveda.obtenerInstancia();
 
-    public EditarCredencialesView() {
-        this.boveda = Boveda.obtenerInstancia();
 
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();
         TextField plataformaTextField = new TextField();
         HorizontalLayout layoutRow = new HorizontalLayout();
-        Button buttonPrimary = new Button();
+        Button BotonBuscar = new Button();
         VerticalLayout layoutColumn3 = new VerticalLayout();
         FormLayout formLayout2Col2 = new FormLayout();
         TextField nuevoUsuarioTextField = new TextField();
@@ -45,7 +51,7 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         TextField nuevaClaveTextField = new TextField();
         VerticalLayout layoutColumn5 = new VerticalLayout();
         HorizontalLayout layoutRow2 = new HorizontalLayout();
-        Button buttonPrimary2 = new Button();
+        Button BotonGuardar = new Button();
         Button BotonRegresar = new Button();
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
@@ -63,9 +69,9 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         layoutRow.addClassName(Gap.MEDIUM);
         layoutRow.setWidth("100%");
         layoutRow.getStyle().set("flex-grow", "1");
-        buttonPrimary.setText("Buscar");
-        buttonPrimary.setWidth("min-content");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonBuscar.setText("Buscar");
+        BotonBuscar.setWidth("min-content");
+        BotonBuscar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         layoutColumn3.setWidth("100%");
         layoutColumn3.setMaxWidth("800px");
         layoutColumn3.setHeight("min-content");
@@ -82,9 +88,9 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         layoutRow2.addClassName(Gap.MEDIUM);
         layoutRow2.setWidth("100%");
         layoutRow2.getStyle().set("flex-grow", "1");
-        buttonPrimary2.setText("Guardar");
-        buttonPrimary2.setWidth("min-content");
-        buttonPrimary2.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        BotonGuardar.setText("Guardar");
+        BotonGuardar.setWidth("min-content");
+        BotonGuardar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonRegresar.setText("Regresar a inicio");
         BotonRegresar.setWidth("min-content");
         BotonRegresar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -98,7 +104,7 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         layoutColumn2.add(formLayout2Col);
         formLayout2Col.add(plataformaTextField);
         layoutColumn2.add(layoutRow);
-        layoutRow.add(buttonPrimary);
+        layoutRow.add(BotonBuscar);
         layoutColumn2.add(layoutColumn3);
         layoutColumn3.add(formLayout2Col2);
         formLayout2Col2.add(nuevoUsuarioTextField);
@@ -107,17 +113,33 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         formLayout2Col3.add(nuevaClaveTextField);
         layoutColumn4.add(layoutColumn5);
         layoutColumn5.add(layoutRow2);
-        layoutRow2.add(buttonPrimary2);
+        layoutRow2.add(BotonGuardar);
         layoutRow2.add(BotonRegresar);
 
         // Agregar la lógica al botón de búsqueda
-        buttonPrimary.addClickListener(e -> buscarCredenciales(plataformaTextField, nuevoUsuarioTextField, nuevaClaveTextField));
+
+        BotonBuscar.addClickListener(e -> {/*buscarCredenciales(plataformaTextField, nuevoUsuarioTextField, nuevaClaveTextField)*/
+            Credenciales credenciales1;
+            String plataforma = plataformaTextField.getValue();
+            credenciales1 = credencialesService.buscarCredenciales(plataforma, CredencialesService.id);
+            nuevoUsuarioTextField.setValue(credenciales1.getUsuario());
+             String clavedesencriptada=encriptar.desencriptarAES(credenciales1.getClave());
+            nuevaClaveTextField.setValue(clavedesencriptada);
+        });
 
         // Agregar la lógica al botón de guardar
-        buttonPrimary2.addClickListener(e -> guardarCredenciales(plataformaTextField, nuevoUsuarioTextField, nuevaClaveTextField));
+        BotonGuardar.addClickListener(e ->{ /*guardarCredenciales(plataformaTextField, nuevoUsuarioTextField, nuevaClaveTextField)*/
+            Credenciales credenciales1;
+            String plataforma = plataformaTextField.getValue();
+            credenciales1 = credencialesService.buscarCredenciales(plataforma, CredencialesService.id);
+            String claveNueva= nuevaClaveTextField.getValue();
+            String claveEncriptada = encriptar.encriptarAES(claveNueva);
+            credencialesService.editarCredenciales(nuevoUsuarioTextField, claveEncriptada, credenciales1);
+
+        });
     }
 
-    private void buscarCredenciales(TextField plataformaTextField, TextField nuevoUsuarioTextField, TextField nuevaClaveTextField) {
+    /*private void buscarCredenciales(TextField plataformaTextField, TextField nuevoUsuarioTextField, TextField nuevaClaveTextField) {
         String plataforma = plataformaTextField.getValue();
         if (boveda.existePlataforma(plataforma)) {
             nuevoUsuarioTextField.setValue(boveda.mostrarUsuario(plataforma));
@@ -125,9 +147,9 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         } else {
             Notification.show("La plataforma no existe en la bóveda");
         }
-    }
+    }*/
 
-    private void guardarCredenciales(TextField plataformaTextField, TextField nuevoUsuarioTextField, TextField nuevaClaveTextField) {
+   /* private void guardarCredenciales(TextField plataformaTextField, TextField nuevoUsuarioTextField, TextField nuevaClaveTextField) {
         String plataforma = plataformaTextField.getValue();
         String nuevoUsuario = nuevoUsuarioTextField.getValue();
         String nuevaClave = nuevaClaveTextField.getValue();
@@ -140,5 +162,5 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         } else {
             Notification.show("La plataforma no existe en la bóveda");
         }
-    }
+    }*/
 }
