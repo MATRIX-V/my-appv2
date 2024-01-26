@@ -17,9 +17,22 @@ public class UsuarioService {
         // Lógica para validar el usuario maestro en la base de datos
         // Devuelve true si las credenciales son correctas, de lo contrario, false
         try {
-            Usuario usuarioMaestro = usuarioRepository.findByClave(clave);
+            Usuario usuarioMaestro = usuarioRepository.findByUsuario(usuario);
             CredencialesService.id = usuarioMaestro.getId();
             return usuarioMaestro != null && usuarioMaestro.getClave().equals(clave);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean validarUsuarioMaestro2(String usuario) {
+        // Lógica para validar el usuario maestro en la base de datos
+        // Devuelve true si las credenciales son correctas, de lo contrario, false
+        try {
+            Usuario usuarioMaestro = usuarioRepository.findByUsuario(usuario);
+            CredencialesService.id = usuarioMaestro.getId();
+            return usuarioMaestro.getUsuario() != null;
         }catch (Exception ex){
             ex.printStackTrace();
             return false;

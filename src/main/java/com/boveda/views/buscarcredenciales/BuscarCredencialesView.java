@@ -31,7 +31,7 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
     private CredencialesService credencialesService;
     Encriptar encriptar=new Encriptar();
     public BuscarCredencialesView(CredencialesService credencialesService) {
-        Boveda boveda = Boveda.obtenerInstancia();
+
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3();
         FormLayout formLayout2Col = new FormLayout();
@@ -71,17 +71,7 @@ public class BuscarCredencialesView extends Composite<VerticalLayout> {
             }else {
                 Notification.show("La plataforma no existe en la bóveda");
             }
-            /*String plat= ContenedorPlat.getValue();
-            if(boveda.existePlataforma(plat)){
-                String clave = boveda.mostrarClave(plat);
-                String usuario = boveda.mostrarUsuario(plat);
-                ContenedorUsuario.setText("Usuario:" + usuario);
 
-                ContenedorClave.setText("Contraseña:" + clave);
-            }else {
-
-                Notification.show("Credenciales no existen");
-            }*/
         });
 
         BotonRegresar.setText("Regresar a inicio");

@@ -89,12 +89,18 @@ public class InicioSesionView extends Composite<VerticalLayout> {
         BotonCrear.addClickListener(event -> {
             String usuarioMaestro = textFieldUsuario.getValue();
             String claveMaestra = textFieldClave.getValue();
-            Usuario usuario = new Usuario(usuarioMaestro, claveMaestra);
-            usuarioService.CrearUsuario(usuario);
-            CredencialesService.id = usuario.getId();
-            credencialesService.RecargarCredenciales(CredencialesService.id);
-            UI.getCurrent().navigate(InicioView.class);
-                });
+
+            if (usuarioService.validarUsuarioMaestro2(usuarioMaestro)) {
+                Notification.show("Credenciales ya existen");
+            } else {
+                Usuario usuario = new Usuario(usuarioMaestro, claveMaestra);
+                usuarioService.CrearUsuario(usuario);
+                CredencialesService.id = usuario.getId();
+                credencialesService.RecargarCredenciales(CredencialesService.id);
+                UI.getCurrent().navigate(InicioView.class);
+
+            }
+        });
         layoutRow3.setHeightFull();
         layoutRow.setFlexGrow(1.0, layoutRow3);
         layoutRow3.addClassName(Gap.MEDIUM);

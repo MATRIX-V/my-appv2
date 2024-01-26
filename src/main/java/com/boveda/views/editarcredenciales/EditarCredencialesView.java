@@ -134,7 +134,7 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         });
 
         // Agregar la lógica al botón de guardar
-        BotonGuardar.addClickListener(e ->{ /*guardarCredenciales(plataformaTextField, nuevoUsuarioTextField, nuevaClaveTextField)*/
+        BotonGuardar.addClickListener(e ->{
             Credenciales credenciales1;
             String plataforma = plataformaTextField.getValue();
             credenciales1 = credencialesService.buscarCredenciales(plataforma, CredencialesService.id);
@@ -145,28 +145,5 @@ public class EditarCredencialesView extends Composite<VerticalLayout> {
         });
     }
 
-    /*private void buscarCredenciales(TextField plataformaTextField, TextField nuevoUsuarioTextField, TextField nuevaClaveTextField) {
-        String plataforma = plataformaTextField.getValue();
-        if (boveda.existePlataforma(plataforma)) {
-            nuevoUsuarioTextField.setValue(boveda.mostrarUsuario(plataforma));
-            nuevaClaveTextField.setValue(boveda.mostrarClave(plataforma));
-        } else {
-            Notification.show("La plataforma no existe en la bóveda");
-        }
-    }*/
 
-   /* private void guardarCredenciales(TextField plataformaTextField, TextField nuevoUsuarioTextField, TextField nuevaClaveTextField) {
-        String plataforma = plataformaTextField.getValue();
-        String nuevoUsuario = nuevoUsuarioTextField.getValue();
-        String nuevaClave = nuevaClaveTextField.getValue();
-
-        if (boveda.existePlataforma(plataforma)) {
-            boveda.cambiarUsuario(plataforma, nuevoUsuario);
-            boveda.cambiarClave(plataforma, nuevaClave);
-
-            Notification.show("Credenciales actualizadas correctamente");
-        } else {
-            Notification.show("La plataforma no existe en la bóveda");
-        }
-    }*/
 }

@@ -121,11 +121,8 @@ public class InicioView extends Composite<VerticalLayout> {
                 // Lógica para eliminar la credencial seleccionada
                 Boveda.eliminarDato(credencial.getPlataforma());
 
-                // Remover la credencial del Grid
                 CredencialesService.listaCredenciales.remove(credencial);
-                //Utils.Cred.remove(credencial);
                 grid.setItems(CredencialesService.listaCredenciales);
-                //grid.setItems(Utils.Cred);
                 credencialesService.borrarCredenciales(credencial);
             });
             return deleteButton;
