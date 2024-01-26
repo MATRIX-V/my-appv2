@@ -8,6 +8,7 @@ import com.boveda.views.MainLayout;
 import com.boveda.views.buscarcredenciales.BuscarCredencialesView;
 import com.boveda.views.crearclave.CrearClaveView;
 import com.boveda.views.editarcredenciales.EditarCredencialesView;
+import com.boveda.views.iniciosesion.InicioSesionView;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -29,6 +30,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,6 +46,7 @@ public class InicioView extends Composite<VerticalLayout> {
 
     public InicioView(CredencialesService credencialesService) {
 
+
         //credencialesService.CargarDatosIniciales(CredencialesService.id);
         H1 h1 = new H1();
         H2 h2 = new H2();
@@ -54,6 +57,7 @@ public class InicioView extends Composite<VerticalLayout> {
         Button BotonCrear = new Button();
         Button BotonBuscar = new Button();
         Button BotonEditar = new Button();
+        Button BotonCambiar = new Button();
 
         getContent().setWidth("50%");
         getContent().getStyle().set("flex-grow", "1");
@@ -74,7 +78,9 @@ public class InicioView extends Composite<VerticalLayout> {
         // Configurar datos de muestra en el Grid
         List<Credenciales> credenciales = CredencialesService.listaCredenciales;//Utils.Cred;
         grid.setItems(credenciales);
-
+        List<Credenciales> credencialesList = new ArrayList<>();
+        credencialesList=credencialesService.RecargarCredenciales(CredencialesService.id);
+        grid.setItems(credencialesList);
 
         layoutColumn2.setWidthFull();
         layoutColumn2.getStyle().set("flex-grow", "1");
@@ -125,12 +131,22 @@ public class InicioView extends Composite<VerticalLayout> {
             return deleteButton;
         });
 
+        BotonCambiar.setText("Cambiar de cuenta");
+        BotonCambiar.setWidth("min-content");
+        BotonCambiar.addClickListener(event -> {
+            // La lógica que se desea ejecutar cuando se presiona el botón
+            UI.getCurrent().navigate(InicioSesionView.class);
+
+
+        });
+
         layoutColumn2.add(grid);
         getContent().add(layoutColumn2);  //
         getContent().add(layoutRow);
         layoutRow.add(BotonCrear);
         layoutRow.add(BotonBuscar);
         layoutRow.add(BotonEditar);
+        layoutRow.add(BotonCambiar);
 
 
     }

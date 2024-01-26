@@ -15,6 +15,7 @@ import java.util.TimerTask;
 
 @Service
 public class CredencialesService {
+
     public static String id;
     private CredencialesRepository credencialesRepository;
 
@@ -71,6 +72,10 @@ public class CredencialesService {
         }
     }
 
+    public List<Credenciales> RecargarCredenciales(String id){
+        return credencialesRepository.findByIdUsuario(id);
+    }
+
     public void cargarDatosIniciales(String id) {
         listaCredenciales = credencialesRepository.findAllByIdUsuario(id);
     }
@@ -90,7 +95,7 @@ public class CredencialesService {
             System.out.println("No se pudo guardar el contacto");
         }
         return listaCredenciales;
-    }
+    }*/
 
 
 

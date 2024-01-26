@@ -14,8 +14,7 @@ public class Usuario {
     @Indexed(name="clave", unique = true)
     private String clave;
 
-    public Usuario(String id, String usuario, String clave) {
-        this.id = id;
+    public Usuario(String usuario, String clave) {
         this.usuario = usuario;
         this.clave = clave;
     }
